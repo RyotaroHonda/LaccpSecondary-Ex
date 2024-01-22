@@ -1,0 +1,9 @@
+[submodule "LaccpSecondary-Ex.srcs/sources_1/laccp"]
+	path = LaccpSecondary-Ex.srcs/sources_1/laccp
+	url = https://github.com/RyotaroHonda/LACCP.git
+[submodule "LaccpSecondary-Ex.srcs/sources_1/mikumari"]
+	path = LaccpSecondary-Ex.srcs/sources_1/mikumari
+	url = https://github.com/RyotaroHonda/mikumari.git
+[submodule "LaccpSecondary-Ex.srcs/sources_1/sitcp"]
+	path = LaccpSecondary-Ex.srcs/sources_1/sitcp
+	url = https://github.com/BeeBeansTechnologies/SiTCP_Netlist_for_Kintex7.git
