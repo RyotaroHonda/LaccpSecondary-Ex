@@ -10,6 +10,7 @@ library mylib;
 use mylib.defToplevel.all;
 use mylib.defBCT.all;
 use mylib.defBusAddressMap.all;
+use mylib.defCDCM.all;
 use mylib.defMikumari.all;
 use mylib.defLaccp.all;
 use mylib.defHeartBeatUnit.all;
@@ -111,6 +112,8 @@ architecture Behavioral of toplevel is
 
   signal delayed_usr_rstb : std_logic;
 
+  signal tmp_nim_out      : std_logic_vector(NIM_OUT'range);
+
   -- DIP -----------------------------------------------------------------------------------
   signal dip_sw       : std_logic_vector(DIP'range);
   subtype DipID is integer range 0 to 4;
@@ -124,8 +127,8 @@ architecture Behavioral of toplevel is
   constant kDummy       : regLeaf := (Index => 0);
 
   -- MIKUMARI -----------------------------------------------------------------------------
-  constant  kPcbVersion : string:= "GN-2006-4";
-  --constant  kPcbVersion : string:= "GN-2006-1";
+  --constant  kPcbVersion : string:= "GN-2006-4";
+  constant  kPcbVersion : string:= "GN-2006-1";
 
   function GetMikuIoStd(version: string) return string is
   begin
@@ -148,6 +151,14 @@ architecture Behavioral of toplevel is
   signal mod_clk, gmod_clk    : std_logic;
 
   signal cbt_tap_value        : std_logic_vector(4 downto 0);
+  signal tap_value_out        : std_logic_vector(kWidthTap-1 downto 0);
+  signal serdes_offset        : signed(kWidthSerdesOffset-1 downto 0);
+  signal bitslip_number       : std_logic_vector(kWidthBitSlipNum-1 downto 0);
+  signal first_bit_pattern    : CdcmPatternType;
+
+  attribute mark_debug of tap_value_out   : signal is "true";
+  attribute mark_debug of bitslip_number  : signal is "true";
+  attribute mark_debug of first_bit_pattern : signal is "true";
 
   -- Mikumari --
   signal miku_tx_ack        : std_logic;
@@ -167,6 +178,8 @@ architecture Behavioral of toplevel is
   signal pulse_tx, pulse_rx : std_logic;
   signal pulse_type_tx, pulse_type_rx  : MikumariPulseType;
 
+  signal tx_beat            : std_logic;
+
  -- LACCP --
   signal is_ready_for_daq   : std_logic;
   signal sync_pulse_out     : std_logic;
@@ -177,13 +190,21 @@ architecture Behavioral of toplevel is
   signal data_laccp_intra_in    : ExtIntraType;
   signal data_laccp_intra_out   : ExtIntraType;
 
+  signal pulse_in, synced_pulse_in  : std_logic;
+  signal pulse_out                  : std_logic_vector(kNumLaccpPulse-1 downto 0);
+
   -- RLIGP --
   signal link_addr_partter  : std_logic_vector(kPosRegister'range);
   signal valid_link_addr    : std_logic;
 
   -- RCAP --
+  signal idelay_tap_in      : unsigned(tap_value_out'range);
+  signal idelay_tap_out     : unsigned(tap_value_out'range);
+  signal partner_serdes_offset  : signed(serdes_offset'range);
+
   signal valid_hbc_offset   : std_logic;
   signal hbc_offset         : std_logic_vector(kWidthHbCount-1 downto 0);
+  signal laccp_fine_offset  : signed(kWidthLaccpFineOffset-1 downto 0);
 
   -- Heartbeat --
   signal hbu_is_synchronized  : std_logic;
@@ -198,6 +219,11 @@ architecture Behavioral of toplevel is
   attribute mark_debug of link_addr_partter  : signal is "true";
   attribute mark_debug of valid_link_addr    : signal is "true";
   attribute mark_debug of sync_pulse_out     : signal is "true";
+  attribute mark_debug of idelay_tap_in      : signal is "true";
+  attribute mark_debug of idelay_tap_out     : signal is "true";
+  attribute mark_debug of serdes_offset      : signal is "true";
+  attribute mark_debug of partner_serdes_offset  : signal is "true";
+  attribute mark_debug of laccp_fine_offset  : signal is "true";
 
   -- C6C ----------------------------------------------------------------------------------
   signal c6c_reset              : std_logic;
@@ -412,21 +438,30 @@ architecture Behavioral of toplevel is
     generic map(kNumDelay => 128)
     port map(clk_sys, USR_RSTB, delayed_usr_rstb);
 
-  clk_miku_locked <= mmcm_cdcm_locked;
+  clk_miku_locked <= CDCE_LOCK;
+  --clk_miku_locked <= mmcm_cdcm_locked;
   clk_locked      <= clk_sys_locked and clk_miku_locked;
 
-  --c6c_reset       <= (not clk_sys_locked) or (not delayed_usr_rstb);
-  c6c_reset       <= '1';
+  c6c_reset       <= (not clk_sys_locked) or (not delayed_usr_rstb);
+  --c6c_reset       <= '1';
   mmcm_cdcm_reset <= (not delayed_usr_rstb);
 
   system_reset    <= (not clk_miku_locked) or (not USR_RSTB);
   pwr_on_reset    <= (not clk_sys_locked) or (not USR_RSTB);
+  laccp_reset     <= system_reset or (not mikumari_link_up);
 
   user_reset      <= system_reset or rst_from_bus or emergency_reset(0);
   bct_reset       <= system_reset or emergency_reset(0);
 
-  NIM_OUT(1)  <= c6c_slow when(DIP(kClkOut.Index) = '1') else heartbeat_signal;
-  NIM_OUT(2)  <= mod_clk  when(DIP(kClkOut.Index) = '1') else is_ready_for_daq;
+  u_nimo_buf : process(clk_slow)
+  begin
+    if(clk_slow'event and clk_slow = '1') then
+      NIM_OUT <= tmp_nim_out;
+    end if;
+  end process;
+
+  tmp_nim_out(1)  <= pulse_in     when(DIP(kClkOut.Index) = '1') else heartbeat_signal;
+  tmp_nim_out(2)  <= pulse_out(7) when(DIP(kClkOut.Index) = '1') else tx_beat;
 
   dip_sw(1)   <= DIP(1);
   dip_sw(2)   <= DIP(2);
@@ -480,8 +515,8 @@ architecture Behavioral of toplevel is
       enDebugCBT       => FALSE,
 
       -- MIKUMARI generic --------------------------------------------------------
-      -- Scrambler --
       enScrambler      => TRUE,
+      kHighPrecision   => FALSE,
       -- DEBUG --
       enDebugMikumari  => FALSE
     )
@@ -494,14 +529,14 @@ architecture Behavioral of toplevel is
       clkIndep      => clk_gbe,
       clkIdctrl     => clk_gbe,
       initIn        => power_on_init,
-      tapValueIn    => cbt_tap_value,
-      tapValueOut   => open,
 
       TXP           => MIKUMARI_TXP,
       TXN           => MIKUMARI_TXN,
       RXP           => MIKUMARI_RXP,
       RXN           => MIKUMARI_RXN,
       modClk        => mod_clk,
+      tapValueIn    => cbt_tap_value,
+      txBeat        => tx_beat,
 
       -- CBT ports ------------------------------------------------------------
       laneUp        => cbt_lane_up,
@@ -509,6 +544,11 @@ architecture Behavioral of toplevel is
       bitslipErr    => open,
       pattErr       => pattern_error,
       watchDogErr   => watchdog_error,
+
+      tapValueOut   => tap_value_out,
+      bitslipNum    => bitslip_number,
+      serdesOffset  => serdes_offset,
+      firstBitPatt  => first_bit_pattern,
 
       -- Mikumari ports -------------------------------------------------------
       linkUp        => mikumari_link_up,
@@ -522,6 +562,7 @@ architecture Behavioral of toplevel is
 
       pulseIn       => pulse_tx,
       pulseTypeTx   => pulse_type_tx,
+      pulseRegTx    => "0000",
       busyPulseTx   => busy_pulse_tx,
 
       -- RX port --
@@ -534,11 +575,17 @@ architecture Behavioral of toplevel is
       recvTermnd  => recv_terminated,
 
       pulseOut    => pulse_rx,
-      pulseTypeRx => pulse_type_rx
+      pulseTypeRx => pulse_type_rx,
+      pulseRegRx  => open
 
     );
 
   --
+  u_sync_nim2 : entity mylib.synchronizer port map(clk_slow, NIM_IN(2), synced_pulse_in);
+  u_edge_nim2 : entity mylib.EdgeDetector port map('0', clk_slow, synced_pulse_in, pulse_in);
+
+  idelay_tap_in   <= unsigned(tap_value_out);
+
   u_LACCP : entity mylib.LaccpMainBlock
     generic map
       (
@@ -554,8 +601,8 @@ architecture Behavioral of toplevel is
 
         -- User Interface ------------------------------------------------
         isReadyForDaq     => is_ready_for_daq,
-        laccpPulsesIn     => (others => '0'),
-        laccpPulsesOut    => open,
+        laccpPulsesIn     => (7 => pulse_in, others => '0'),
+        laccpPulsesOut    => pulse_out,
         pulseInRejected   => open,
 
         -- RLIGP --
@@ -565,12 +612,19 @@ architecture Behavioral of toplevel is
         validPartnerLink  => valid_link_addr,
 
         -- RCAP --
+        idelayTapIn       => idelay_tap_in,
+        serdesLantencyIn  => serdes_offset,
+        idelayTapOut      => idelay_tap_out,
+        serdesLantencyOut => partner_serdes_offset,
+
         hbuIsSyncedIn     => hbu_is_synchronized,
         syncPulseIn       => heartbeat_signal,
         syncPulseOut      => sync_pulse_out,
 
+        upstreamOffset    => (others => '0'),
         validOffset       => valid_hbc_offset,
         hbcOffset         => hbc_offset,
+        fineOffset        => laccp_fine_offset,
 
         -- LACCP Bus Port ------------------------------------------------
         -- Intra-port--
@@ -664,7 +718,7 @@ architecture Behavioral of toplevel is
     port map(
       rst                 => system_reset,
       clk                 => clk_slow,
-      refClkIn            => clk_spi,
+      refClkIn            => gmod_clk,
 
       chipReset           => c6c_reset,
       clkIndep            => clk_sys,
@@ -1028,6 +1082,19 @@ architecture Behavioral of toplevel is
       O => gmod_clk, -- 1-bit output: Clock output
       I => mod_clk  -- 1-bit input: Clock input
     );
+--
+--  --
+--  u_BUFG_Fast_inst :  BUFG
+--    port map (
+--      O => clk_fast, -- 1-bit output: Clock output
+--      I => c6c_fast  -- 1-bit input: Clock input
+--    );
+--
+--  u_BUFG_Slow_inst :  BUFG
+--    port map (
+--      O => clk_slow, -- 1-bit output: Clock output
+--      I => c6c_slow  -- 1-bit input: Clock input
+--    );
 
   --
   u_MMCM_CDCM : mmcm_cdcm

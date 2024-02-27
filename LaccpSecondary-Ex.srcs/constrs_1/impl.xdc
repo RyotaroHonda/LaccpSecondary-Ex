@@ -8,8 +8,6 @@ set_property CFGBVS VCCO [current_design]
 set_property BITSTREAM.CONFIG.SPI_BUSWIDTH 4 [current_design]
 
 
-
-
 create_debug_core u_ila_0 ila
 set_property ALL_PROBE_SAME_MU true [get_debug_cores u_ila_0]
 set_property ALL_PROBE_SAME_MU_CNT 1 [get_debug_cores u_ila_0]
@@ -22,136 +20,224 @@ set_property C_TRIGOUT_EN false [get_debug_cores u_ila_0]
 set_property port_width 1 [get_debug_ports u_ila_0/clk]
 connect_debug_port u_ila_0/clk [get_nets [list u_MMCM_CDCM/inst/clk_slow]]
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe0]
-set_property port_width 24 [get_debug_ports u_ila_0/probe0]
-connect_debug_port u_ila_0/probe0 [get_nets [list {u_HBU/global_hbf_number[0]} {u_HBU/global_hbf_number[1]} {u_HBU/global_hbf_number[2]} {u_HBU/global_hbf_number[3]} {u_HBU/global_hbf_number[4]} {u_HBU/global_hbf_number[5]} {u_HBU/global_hbf_number[6]} {u_HBU/global_hbf_number[7]} {u_HBU/global_hbf_number[8]} {u_HBU/global_hbf_number[9]} {u_HBU/global_hbf_number[10]} {u_HBU/global_hbf_number[11]} {u_HBU/global_hbf_number[12]} {u_HBU/global_hbf_number[13]} {u_HBU/global_hbf_number[14]} {u_HBU/global_hbf_number[15]} {u_HBU/global_hbf_number[16]} {u_HBU/global_hbf_number[17]} {u_HBU/global_hbf_number[18]} {u_HBU/global_hbf_number[19]} {u_HBU/global_hbf_number[20]} {u_HBU/global_hbf_number[21]} {u_HBU/global_hbf_number[22]} {u_HBU/global_hbf_number[23]}]]
+set_property port_width 16 [get_debug_ports u_ila_0/probe0]
+connect_debug_port u_ila_0/probe0 [get_nets [list {u_HBU/hb_counter[0]} {u_HBU/hb_counter[1]} {u_HBU/hb_counter[2]} {u_HBU/hb_counter[3]} {u_HBU/hb_counter[4]} {u_HBU/hb_counter[5]} {u_HBU/hb_counter[6]} {u_HBU/hb_counter[7]} {u_HBU/hb_counter[8]} {u_HBU/hb_counter[9]} {u_HBU/hb_counter[10]} {u_HBU/hb_counter[11]} {u_HBU/hb_counter[12]} {u_HBU/hb_counter[13]} {u_HBU/hb_counter[14]} {u_HBU/hb_counter[15]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe1]
 set_property port_width 24 [get_debug_ports u_ila_0/probe1]
-connect_debug_port u_ila_0/probe1 [get_nets [list {u_HBU/local_hbf_number[0]} {u_HBU/local_hbf_number[1]} {u_HBU/local_hbf_number[2]} {u_HBU/local_hbf_number[3]} {u_HBU/local_hbf_number[4]} {u_HBU/local_hbf_number[5]} {u_HBU/local_hbf_number[6]} {u_HBU/local_hbf_number[7]} {u_HBU/local_hbf_number[8]} {u_HBU/local_hbf_number[9]} {u_HBU/local_hbf_number[10]} {u_HBU/local_hbf_number[11]} {u_HBU/local_hbf_number[12]} {u_HBU/local_hbf_number[13]} {u_HBU/local_hbf_number[14]} {u_HBU/local_hbf_number[15]} {u_HBU/local_hbf_number[16]} {u_HBU/local_hbf_number[17]} {u_HBU/local_hbf_number[18]} {u_HBU/local_hbf_number[19]} {u_HBU/local_hbf_number[20]} {u_HBU/local_hbf_number[21]} {u_HBU/local_hbf_number[22]} {u_HBU/local_hbf_number[23]}]]
+connect_debug_port u_ila_0/probe1 [get_nets [list {u_HBU/global_hbf_number[0]} {u_HBU/global_hbf_number[1]} {u_HBU/global_hbf_number[2]} {u_HBU/global_hbf_number[3]} {u_HBU/global_hbf_number[4]} {u_HBU/global_hbf_number[5]} {u_HBU/global_hbf_number[6]} {u_HBU/global_hbf_number[7]} {u_HBU/global_hbf_number[8]} {u_HBU/global_hbf_number[9]} {u_HBU/global_hbf_number[10]} {u_HBU/global_hbf_number[11]} {u_HBU/global_hbf_number[12]} {u_HBU/global_hbf_number[13]} {u_HBU/global_hbf_number[14]} {u_HBU/global_hbf_number[15]} {u_HBU/global_hbf_number[16]} {u_HBU/global_hbf_number[17]} {u_HBU/global_hbf_number[18]} {u_HBU/global_hbf_number[19]} {u_HBU/global_hbf_number[20]} {u_HBU/global_hbf_number[21]} {u_HBU/global_hbf_number[22]} {u_HBU/global_hbf_number[23]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe2]
-set_property port_width 16 [get_debug_ports u_ila_0/probe2]
-connect_debug_port u_ila_0/probe2 [get_nets [list {u_HBU/hb_counter[0]} {u_HBU/hb_counter[1]} {u_HBU/hb_counter[2]} {u_HBU/hb_counter[3]} {u_HBU/hb_counter[4]} {u_HBU/hb_counter[5]} {u_HBU/hb_counter[6]} {u_HBU/hb_counter[7]} {u_HBU/hb_counter[8]} {u_HBU/hb_counter[9]} {u_HBU/hb_counter[10]} {u_HBU/hb_counter[11]} {u_HBU/hb_counter[12]} {u_HBU/hb_counter[13]} {u_HBU/hb_counter[14]} {u_HBU/hb_counter[15]}]]
+set_property port_width 24 [get_debug_ports u_ila_0/probe2]
+connect_debug_port u_ila_0/probe2 [get_nets [list {u_HBU/local_hbf_number[0]} {u_HBU/local_hbf_number[1]} {u_HBU/local_hbf_number[2]} {u_HBU/local_hbf_number[3]} {u_HBU/local_hbf_number[4]} {u_HBU/local_hbf_number[5]} {u_HBU/local_hbf_number[6]} {u_HBU/local_hbf_number[7]} {u_HBU/local_hbf_number[8]} {u_HBU/local_hbf_number[9]} {u_HBU/local_hbf_number[10]} {u_HBU/local_hbf_number[11]} {u_HBU/local_hbf_number[12]} {u_HBU/local_hbf_number[13]} {u_HBU/local_hbf_number[14]} {u_HBU/local_hbf_number[15]} {u_HBU/local_hbf_number[16]} {u_HBU/local_hbf_number[17]} {u_HBU/local_hbf_number[18]} {u_HBU/local_hbf_number[19]} {u_HBU/local_hbf_number[20]} {u_HBU/local_hbf_number[21]} {u_HBU/local_hbf_number[22]} {u_HBU/local_hbf_number[23]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe3]
 set_property port_width 2 [get_debug_ports u_ila_0/probe3]
 connect_debug_port u_ila_0/probe3 [get_nets [list {u_LACCP/u_rx/state_rx[0]} {u_LACCP/u_rx/state_rx[1]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe4]
-set_property port_width 5 [get_debug_ports u_ila_0/probe4]
-connect_debug_port u_ila_0/probe4 [get_nets [list {u_LACCP/u_sw/rd_valid_rx_fifo[0]} {u_LACCP/u_sw/rd_valid_rx_fifo[1]} {u_LACCP/u_sw/rd_valid_rx_fifo[2]} {u_LACCP/u_sw/rd_valid_rx_fifo[3]} {u_LACCP/u_sw/rd_valid_rx_fifo[4]}]]
+set_property port_width 2 [get_debug_ports u_ila_0/probe4]
+connect_debug_port u_ila_0/probe4 [get_nets [list {u_LACCP/u_tx/state_tx[0]} {u_LACCP/u_tx/state_tx[1]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe5]
-set_property port_width 2 [get_debug_ports u_ila_0/probe5]
-connect_debug_port u_ila_0/probe5 [get_nets [list {u_LACCP/u_sw/state_switch[0]} {u_LACCP/u_sw/state_switch[1]}]]
+set_property port_width 4 [get_debug_ports u_ila_0/probe5]
+connect_debug_port u_ila_0/probe5 [get_nets [list {bitslip_number[0]} {bitslip_number[1]} {bitslip_number[2]} {bitslip_number[3]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe6]
-set_property port_width 64 [get_debug_ports u_ila_0/probe6]
-connect_debug_port u_ila_0/probe6 [get_nets [list {u_LACCP/u_sw/reg_bus_data[0]} {u_LACCP/u_sw/reg_bus_data[1]} {u_LACCP/u_sw/reg_bus_data[2]} {u_LACCP/u_sw/reg_bus_data[3]} {u_LACCP/u_sw/reg_bus_data[4]} {u_LACCP/u_sw/reg_bus_data[5]} {u_LACCP/u_sw/reg_bus_data[6]} {u_LACCP/u_sw/reg_bus_data[7]} {u_LACCP/u_sw/reg_bus_data[8]} {u_LACCP/u_sw/reg_bus_data[9]} {u_LACCP/u_sw/reg_bus_data[10]} {u_LACCP/u_sw/reg_bus_data[11]} {u_LACCP/u_sw/reg_bus_data[12]} {u_LACCP/u_sw/reg_bus_data[13]} {u_LACCP/u_sw/reg_bus_data[14]} {u_LACCP/u_sw/reg_bus_data[15]} {u_LACCP/u_sw/reg_bus_data[16]} {u_LACCP/u_sw/reg_bus_data[17]} {u_LACCP/u_sw/reg_bus_data[18]} {u_LACCP/u_sw/reg_bus_data[19]} {u_LACCP/u_sw/reg_bus_data[20]} {u_LACCP/u_sw/reg_bus_data[21]} {u_LACCP/u_sw/reg_bus_data[22]} {u_LACCP/u_sw/reg_bus_data[23]} {u_LACCP/u_sw/reg_bus_data[24]} {u_LACCP/u_sw/reg_bus_data[25]} {u_LACCP/u_sw/reg_bus_data[26]} {u_LACCP/u_sw/reg_bus_data[27]} {u_LACCP/u_sw/reg_bus_data[28]} {u_LACCP/u_sw/reg_bus_data[29]} {u_LACCP/u_sw/reg_bus_data[30]} {u_LACCP/u_sw/reg_bus_data[31]} {u_LACCP/u_sw/reg_bus_data[32]} {u_LACCP/u_sw/reg_bus_data[33]} {u_LACCP/u_sw/reg_bus_data[34]} {u_LACCP/u_sw/reg_bus_data[35]} {u_LACCP/u_sw/reg_bus_data[36]} {u_LACCP/u_sw/reg_bus_data[37]} {u_LACCP/u_sw/reg_bus_data[38]} {u_LACCP/u_sw/reg_bus_data[39]} {u_LACCP/u_sw/reg_bus_data[40]} {u_LACCP/u_sw/reg_bus_data[41]} {u_LACCP/u_sw/reg_bus_data[42]} {u_LACCP/u_sw/reg_bus_data[43]} {u_LACCP/u_sw/reg_bus_data[44]} {u_LACCP/u_sw/reg_bus_data[45]} {u_LACCP/u_sw/reg_bus_data[46]} {u_LACCP/u_sw/reg_bus_data[47]} {u_LACCP/u_sw/reg_bus_data[48]} {u_LACCP/u_sw/reg_bus_data[49]} {u_LACCP/u_sw/reg_bus_data[50]} {u_LACCP/u_sw/reg_bus_data[51]} {u_LACCP/u_sw/reg_bus_data[52]} {u_LACCP/u_sw/reg_bus_data[53]} {u_LACCP/u_sw/reg_bus_data[54]} {u_LACCP/u_sw/reg_bus_data[55]} {u_LACCP/u_sw/reg_bus_data[56]} {u_LACCP/u_sw/reg_bus_data[57]} {u_LACCP/u_sw/reg_bus_data[58]} {u_LACCP/u_sw/reg_bus_data[59]} {u_LACCP/u_sw/reg_bus_data[60]} {u_LACCP/u_sw/reg_bus_data[61]} {u_LACCP/u_sw/reg_bus_data[62]} {u_LACCP/u_sw/reg_bus_data[63]}]]
+set_property port_width 4 [get_debug_ports u_ila_0/probe6]
+connect_debug_port u_ila_0/probe6 [get_nets [list {serdes_offset[0]} {serdes_offset[1]} {serdes_offset[2]} {serdes_offset[3]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe7]
-set_property port_width 16 [get_debug_ports u_ila_0/probe7]
-connect_debug_port u_ila_0/probe7 [get_nets [list {u_LACCP/u_RCAP/reg_round_trip_time[0]} {u_LACCP/u_RCAP/reg_round_trip_time[1]} {u_LACCP/u_RCAP/reg_round_trip_time[2]} {u_LACCP/u_RCAP/reg_round_trip_time[3]} {u_LACCP/u_RCAP/reg_round_trip_time[4]} {u_LACCP/u_RCAP/reg_round_trip_time[5]} {u_LACCP/u_RCAP/reg_round_trip_time[6]} {u_LACCP/u_RCAP/reg_round_trip_time[7]} {u_LACCP/u_RCAP/reg_round_trip_time[8]} {u_LACCP/u_RCAP/reg_round_trip_time[9]} {u_LACCP/u_RCAP/reg_round_trip_time[10]} {u_LACCP/u_RCAP/reg_round_trip_time[11]} {u_LACCP/u_RCAP/reg_round_trip_time[12]} {u_LACCP/u_RCAP/reg_round_trip_time[13]} {u_LACCP/u_RCAP/reg_round_trip_time[14]} {u_LACCP/u_RCAP/reg_round_trip_time[15]}]]
+set_property port_width 32 [get_debug_ports u_ila_0/probe7]
+connect_debug_port u_ila_0/probe7 [get_nets [list {link_addr_partter[0]} {link_addr_partter[1]} {link_addr_partter[2]} {link_addr_partter[3]} {link_addr_partter[4]} {link_addr_partter[5]} {link_addr_partter[6]} {link_addr_partter[7]} {link_addr_partter[8]} {link_addr_partter[9]} {link_addr_partter[10]} {link_addr_partter[11]} {link_addr_partter[12]} {link_addr_partter[13]} {link_addr_partter[14]} {link_addr_partter[15]} {link_addr_partter[16]} {link_addr_partter[17]} {link_addr_partter[18]} {link_addr_partter[19]} {link_addr_partter[20]} {link_addr_partter[21]} {link_addr_partter[22]} {link_addr_partter[23]} {link_addr_partter[24]} {link_addr_partter[25]} {link_addr_partter[26]} {link_addr_partter[27]} {link_addr_partter[28]} {link_addr_partter[29]} {link_addr_partter[30]} {link_addr_partter[31]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe8]
-set_property port_width 16 [get_debug_ports u_ila_0/probe8]
-connect_debug_port u_ila_0/probe8 [get_nets [list {u_LACCP/u_RCAP/reg_hbc_offset[0]} {u_LACCP/u_RCAP/reg_hbc_offset[1]} {u_LACCP/u_RCAP/reg_hbc_offset[2]} {u_LACCP/u_RCAP/reg_hbc_offset[3]} {u_LACCP/u_RCAP/reg_hbc_offset[4]} {u_LACCP/u_RCAP/reg_hbc_offset[5]} {u_LACCP/u_RCAP/reg_hbc_offset[6]} {u_LACCP/u_RCAP/reg_hbc_offset[7]} {u_LACCP/u_RCAP/reg_hbc_offset[8]} {u_LACCP/u_RCAP/reg_hbc_offset[9]} {u_LACCP/u_RCAP/reg_hbc_offset[10]} {u_LACCP/u_RCAP/reg_hbc_offset[11]} {u_LACCP/u_RCAP/reg_hbc_offset[12]} {u_LACCP/u_RCAP/reg_hbc_offset[13]} {u_LACCP/u_RCAP/reg_hbc_offset[14]} {u_LACCP/u_RCAP/reg_hbc_offset[15]}]]
+set_property port_width 4 [get_debug_ports u_ila_0/probe8]
+connect_debug_port u_ila_0/probe8 [get_nets [list {partner_serdes_offset[0]} {partner_serdes_offset[1]} {partner_serdes_offset[2]} {partner_serdes_offset[3]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe9]
-set_property port_width 2 [get_debug_ports u_ila_0/probe9]
-connect_debug_port u_ila_0/probe9 [get_nets [list {u_LACCP/u_tx/state_tx[0]} {u_LACCP/u_tx/state_tx[1]}]]
+set_property port_width 16 [get_debug_ports u_ila_0/probe9]
+connect_debug_port u_ila_0/probe9 [get_nets [list {laccp_fine_offset[0]} {laccp_fine_offset[1]} {laccp_fine_offset[2]} {laccp_fine_offset[3]} {laccp_fine_offset[4]} {laccp_fine_offset[5]} {laccp_fine_offset[6]} {laccp_fine_offset[7]} {laccp_fine_offset[8]} {laccp_fine_offset[9]} {laccp_fine_offset[10]} {laccp_fine_offset[11]} {laccp_fine_offset[12]} {laccp_fine_offset[13]} {laccp_fine_offset[14]} {laccp_fine_offset[15]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe10]
-set_property port_width 32 [get_debug_ports u_ila_0/probe10]
-connect_debug_port u_ila_0/probe10 [get_nets [list {link_addr_partter[0]} {link_addr_partter[1]} {link_addr_partter[2]} {link_addr_partter[3]} {link_addr_partter[4]} {link_addr_partter[5]} {link_addr_partter[6]} {link_addr_partter[7]} {link_addr_partter[8]} {link_addr_partter[9]} {link_addr_partter[10]} {link_addr_partter[11]} {link_addr_partter[12]} {link_addr_partter[13]} {link_addr_partter[14]} {link_addr_partter[15]} {link_addr_partter[16]} {link_addr_partter[17]} {link_addr_partter[18]} {link_addr_partter[19]} {link_addr_partter[20]} {link_addr_partter[21]} {link_addr_partter[22]} {link_addr_partter[23]} {link_addr_partter[24]} {link_addr_partter[25]} {link_addr_partter[26]} {link_addr_partter[27]} {link_addr_partter[28]} {link_addr_partter[29]} {link_addr_partter[30]} {link_addr_partter[31]}]]
+set_property port_width 5 [get_debug_ports u_ila_0/probe10]
+connect_debug_port u_ila_0/probe10 [get_nets [list {tap_value_out[0]} {tap_value_out[1]} {tap_value_out[2]} {tap_value_out[3]} {tap_value_out[4]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe11]
-set_property port_width 1 [get_debug_ports u_ila_0/probe11]
-connect_debug_port u_ila_0/probe11 [get_nets [list u_HBU/backbeat_signal]]
+set_property port_width 5 [get_debug_ports u_ila_0/probe11]
+connect_debug_port u_ila_0/probe11 [get_nets [list {idelay_tap_out[0]} {idelay_tap_out[1]} {idelay_tap_out[2]} {idelay_tap_out[3]} {idelay_tap_out[4]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe12]
-set_property port_width 1 [get_debug_ports u_ila_0/probe12]
-connect_debug_port u_ila_0/probe12 [get_nets [list u_HBU/comp_hbfnum]]
+set_property port_width 5 [get_debug_ports u_ila_0/probe12]
+connect_debug_port u_ila_0/probe12 [get_nets [list {idelay_tap_in[0]} {idelay_tap_in[1]} {idelay_tap_in[2]} {idelay_tap_in[3]} {idelay_tap_in[4]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe13]
-set_property port_width 1 [get_debug_ports u_ila_0/probe13]
-connect_debug_port u_ila_0/probe13 [get_nets [list u_LACCP/u_rx/frame_invalid]]
+set_property port_width 10 [get_debug_ports u_ila_0/probe13]
+connect_debug_port u_ila_0/probe13 [get_nets [list {first_bit_pattern[0]} {first_bit_pattern[1]} {first_bit_pattern[2]} {first_bit_pattern[3]} {first_bit_pattern[4]} {first_bit_pattern[5]} {first_bit_pattern[6]} {first_bit_pattern[7]} {first_bit_pattern[8]} {first_bit_pattern[9]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe14]
-set_property port_width 1 [get_debug_ports u_ila_0/probe14]
-connect_debug_port u_ila_0/probe14 [get_nets [list u_HBU/frame_state]]
+set_property port_width 16 [get_debug_ports u_ila_0/probe14]
+connect_debug_port u_ila_0/probe14 [get_nets [list {u_LACCP/u_RCAP/reg_hbc_offset[0]} {u_LACCP/u_RCAP/reg_hbc_offset[1]} {u_LACCP/u_RCAP/reg_hbc_offset[2]} {u_LACCP/u_RCAP/reg_hbc_offset[3]} {u_LACCP/u_RCAP/reg_hbc_offset[4]} {u_LACCP/u_RCAP/reg_hbc_offset[5]} {u_LACCP/u_RCAP/reg_hbc_offset[6]} {u_LACCP/u_RCAP/reg_hbc_offset[7]} {u_LACCP/u_RCAP/reg_hbc_offset[8]} {u_LACCP/u_RCAP/reg_hbc_offset[9]} {u_LACCP/u_RCAP/reg_hbc_offset[10]} {u_LACCP/u_RCAP/reg_hbc_offset[11]} {u_LACCP/u_RCAP/reg_hbc_offset[12]} {u_LACCP/u_RCAP/reg_hbc_offset[13]} {u_LACCP/u_RCAP/reg_hbc_offset[14]} {u_LACCP/u_RCAP/reg_hbc_offset[15]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe15]
-set_property port_width 1 [get_debug_ports u_ila_0/probe15]
-connect_debug_port u_ila_0/probe15 [get_nets [list u_LACCP/u_rx/frame_valid]]
+set_property port_width 16 [get_debug_ports u_ila_0/probe15]
+connect_debug_port u_ila_0/probe15 [get_nets [list {u_LACCP/u_RCAP/reg_round_trip_time[0]} {u_LACCP/u_RCAP/reg_round_trip_time[1]} {u_LACCP/u_RCAP/reg_round_trip_time[2]} {u_LACCP/u_RCAP/reg_round_trip_time[3]} {u_LACCP/u_RCAP/reg_round_trip_time[4]} {u_LACCP/u_RCAP/reg_round_trip_time[5]} {u_LACCP/u_RCAP/reg_round_trip_time[6]} {u_LACCP/u_RCAP/reg_round_trip_time[7]} {u_LACCP/u_RCAP/reg_round_trip_time[8]} {u_LACCP/u_RCAP/reg_round_trip_time[9]} {u_LACCP/u_RCAP/reg_round_trip_time[10]} {u_LACCP/u_RCAP/reg_round_trip_time[11]} {u_LACCP/u_RCAP/reg_round_trip_time[12]} {u_LACCP/u_RCAP/reg_round_trip_time[13]} {u_LACCP/u_RCAP/reg_round_trip_time[14]} {u_LACCP/u_RCAP/reg_round_trip_time[15]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe16]
-set_property port_width 1 [get_debug_ports u_ila_0/probe16]
-connect_debug_port u_ila_0/probe16 [get_nets [list u_HBU/ghbf_is_valid]]
+set_property port_width 8 [get_debug_ports u_ila_0/probe16]
+connect_debug_port u_ila_0/probe16 [get_nets [list {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[0][0]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[0][1]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[0][2]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[0][3]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[0][4]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[0][5]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[0][6]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[0][7]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe17]
-set_property port_width 1 [get_debug_ports u_ila_0/probe17]
-connect_debug_port u_ila_0/probe17 [get_nets [list u_HBU/global_frame_state]]
+set_property port_width 8 [get_debug_ports u_ila_0/probe17]
+connect_debug_port u_ila_0/probe17 [get_nets [list {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[1][0]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[1][1]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[1][2]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[1][3]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[1][4]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[1][5]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[1][6]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[1][7]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe18]
-set_property port_width 1 [get_debug_ports u_ila_0/probe18]
-connect_debug_port u_ila_0/probe18 [get_nets [list u_HBU/hbc_is_synced]]
+set_property port_width 8 [get_debug_ports u_ila_0/probe18]
+connect_debug_port u_ila_0/probe18 [get_nets [list {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[2][0]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[2][1]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[2][2]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[2][3]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[2][4]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[2][5]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[2][6]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[2][7]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe19]
-set_property port_width 1 [get_debug_ports u_ila_0/probe19]
-connect_debug_port u_ila_0/probe19 [get_nets [list u_HBU/hbf_is_synced]]
+set_property port_width 8 [get_debug_ports u_ila_0/probe19]
+connect_debug_port u_ila_0/probe19 [get_nets [list {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[3][0]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[3][1]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[3][2]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[3][3]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[3][4]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[3][5]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[3][6]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[3][7]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe20]
-set_property port_width 1 [get_debug_ports u_ila_0/probe20]
-connect_debug_port u_ila_0/probe20 [get_nets [list u_HBU/heartbeat_signal]]
+set_property port_width 8 [get_debug_ports u_ila_0/probe20]
+connect_debug_port u_ila_0/probe20 [get_nets [list {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[4][0]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[4][1]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[4][2]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[4][3]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[4][4]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[4][5]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[4][6]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[4][7]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe21]
-set_property port_width 1 [get_debug_ports u_ila_0/probe21]
-connect_debug_port u_ila_0/probe21 [get_nets [list u_LACCP/u_sw/inter_connect]]
+set_property port_width 8 [get_debug_ports u_ila_0/probe21]
+connect_debug_port u_ila_0/probe21 [get_nets [list {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[5][0]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[5][1]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[5][2]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[5][3]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[5][4]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[5][5]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[5][6]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[5][7]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe22]
-set_property port_width 1 [get_debug_ports u_ila_0/probe22]
-connect_debug_port u_ila_0/probe22 [get_nets [list u_LACCP/u_sw/intra_connect]]
+set_property port_width 8 [get_debug_ports u_ila_0/probe22]
+connect_debug_port u_ila_0/probe22 [get_nets [list {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[6][0]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[6][1]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[6][2]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[6][3]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[6][4]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[6][5]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[6][6]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[6][7]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe23]
-set_property port_width 1 [get_debug_ports u_ila_0/probe23]
-connect_debug_port u_ila_0/probe23 [get_nets [list u_LACCP/u_rx/invalid_frame_length]]
+set_property port_width 8 [get_debug_ports u_ila_0/probe23]
+connect_debug_port u_ila_0/probe23 [get_nets [list {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[0][0]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[0][1]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[0][2]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[0][3]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[0][4]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[0][5]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[0][6]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[0][7]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe24]
-set_property port_width 1 [get_debug_ports u_ila_0/probe24]
-connect_debug_port u_ila_0/probe24 [get_nets [list u_LACCP/u_RCAP/is_done]]
+set_property port_width 8 [get_debug_ports u_ila_0/probe24]
+connect_debug_port u_ila_0/probe24 [get_nets [list {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[4][0]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[4][1]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[4][2]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[4][3]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[4][4]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[4][5]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[4][6]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[4][7]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe25]
-set_property port_width 1 [get_debug_ports u_ila_0/probe25]
-connect_debug_port u_ila_0/probe25 [get_nets [list is_ready_for_daq]]
+set_property port_width 8 [get_debug_ports u_ila_0/probe25]
+connect_debug_port u_ila_0/probe25 [get_nets [list {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[5][0]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[5][1]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[5][2]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[5][3]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[5][4]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[5][5]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[5][6]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[5][7]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe26]
-set_property port_width 1 [get_debug_ports u_ila_0/probe26]
-connect_debug_port u_ila_0/probe26 [get_nets [list u_LACCP/u_sw/miku_connect]]
+set_property port_width 3 [get_debug_ports u_ila_0/probe26]
+connect_debug_port u_ila_0/probe26 [get_nets [list {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/state_scan[0]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/state_scan[1]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/state_scan[2]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe27]
-set_property port_width 1 [get_debug_ports u_ila_0/probe27]
-connect_debug_port u_ila_0/probe27 [get_nets [list u_LACCP/u_RCAP/offset_is_received]]
+set_property port_width 8 [get_debug_ports u_ila_0/probe27]
+connect_debug_port u_ila_0/probe27 [get_nets [list {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[3][0]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[3][1]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[3][2]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[3][3]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[3][4]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[3][5]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[3][6]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[3][7]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe28]
-set_property port_width 1 [get_debug_ports u_ila_0/probe28]
-connect_debug_port u_ila_0/probe28 [get_nets [list u_HBU/reg_hbfnum_mismatch]]
+set_property port_width 8 [get_debug_ports u_ila_0/probe28]
+connect_debug_port u_ila_0/probe28 [get_nets [list {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[6][0]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[6][1]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[6][2]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[6][3]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[6][4]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[6][5]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[6][6]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[6][7]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe29]
-set_property port_width 1 [get_debug_ports u_ila_0/probe29]
-connect_debug_port u_ila_0/probe29 [get_nets [list u_LACCP/u_RCAP/reg_valid_offset]]
+set_property port_width 8 [get_debug_ports u_ila_0/probe29]
+connect_debug_port u_ila_0/probe29 [get_nets [list {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[1][0]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[1][1]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[1][2]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[1][3]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[1][4]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[1][5]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[1][6]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[1][7]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe30]
-set_property port_width 1 [get_debug_ports u_ila_0/probe30]
-connect_debug_port u_ila_0/probe30 [get_nets [list sync_pulse_out]]
+set_property port_width 8 [get_debug_ports u_ila_0/probe30]
+connect_debug_port u_ila_0/probe30 [get_nets [list {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/rx_output[0]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/rx_output[1]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/rx_output[2]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/rx_output[3]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/rx_output[4]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/rx_output[5]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/rx_output[6]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/rx_output[7]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe31]
-set_property port_width 1 [get_debug_ports u_ila_0/probe31]
-connect_debug_port u_ila_0/probe31 [get_nets [list u_LACCP/u_rx/unexpected_preamble]]
+set_property port_width 8 [get_debug_ports u_ila_0/probe31]
+connect_debug_port u_ila_0/probe31 [get_nets [list {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[2][0]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[2][1]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[2][2]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[2][3]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[2][4]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[2][5]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[2][6]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[2][7]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe32]
-set_property port_width 1 [get_debug_ports u_ila_0/probe32]
-connect_debug_port u_ila_0/probe32 [get_nets [list valid_link_addr]]
+set_property port_width 8 [get_debug_ports u_ila_0/probe32]
+connect_debug_port u_ila_0/probe32 [get_nets [list {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/waveform_in[0]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/waveform_in[1]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/waveform_in[2]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/waveform_in[3]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/waveform_in[4]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/waveform_in[5]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/waveform_in[6]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/waveform_in[7]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe33]
+set_property port_width 8 [get_debug_ports u_ila_0/probe33]
+connect_debug_port u_ila_0/probe33 [get_nets [list {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[7][0]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[7][1]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[7][2]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[7][3]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[7][4]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[7][5]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[7][6]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_tdc[7][7]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe34]
+set_property port_width 8 [get_debug_ports u_ila_0/probe34]
+connect_debug_port u_ila_0/probe34 [get_nets [list {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[7][0]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[7][1]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[7][2]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[7][3]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[7][4]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[7][5]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[7][6]} {u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/reg_offset[7][7]}]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe35]
+set_property port_width 1 [get_debug_ports u_ila_0/probe35]
+connect_debug_port u_ila_0/probe35 [get_nets [list u_HBU/backbeat_signal]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe36]
+set_property port_width 1 [get_debug_ports u_ila_0/probe36]
+connect_debug_port u_ila_0/probe36 [get_nets [list u_Miku_Inst/u_CbtLane/u_cbttx/u_cdcm_tx/gen_cdcm8.u_cdcm_tx_oserdes/bit_slip]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe37]
+set_property port_width 1 [get_debug_ports u_ila_0/probe37]
+connect_debug_port u_ila_0/probe37 [get_nets [list u_HBU/comp_hbfnum]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe38]
+set_property port_width 1 [get_debug_ports u_ila_0/probe38]
+connect_debug_port u_ila_0/probe38 [get_nets [list u_LACCP/u_rx/frame_invalid]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe39]
+set_property port_width 1 [get_debug_ports u_ila_0/probe39]
+connect_debug_port u_ila_0/probe39 [get_nets [list u_HBU/frame_state]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe40]
+set_property port_width 1 [get_debug_ports u_ila_0/probe40]
+connect_debug_port u_ila_0/probe40 [get_nets [list u_LACCP/u_rx/frame_valid]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe41]
+set_property port_width 1 [get_debug_ports u_ila_0/probe41]
+connect_debug_port u_ila_0/probe41 [get_nets [list u_HBU/ghbf_is_valid]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe42]
+set_property port_width 1 [get_debug_ports u_ila_0/probe42]
+connect_debug_port u_ila_0/probe42 [get_nets [list u_HBU/global_frame_state]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe43]
+set_property port_width 1 [get_debug_ports u_ila_0/probe43]
+connect_debug_port u_ila_0/probe43 [get_nets [list u_HBU/hbc_is_synced]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe44]
+set_property port_width 1 [get_debug_ports u_ila_0/probe44]
+connect_debug_port u_ila_0/probe44 [get_nets [list u_HBU/hbf_is_synced]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe45]
+set_property port_width 1 [get_debug_ports u_ila_0/probe45]
+connect_debug_port u_ila_0/probe45 [get_nets [list u_HBU/heartbeat_signal]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe46]
+set_property port_width 1 [get_debug_ports u_ila_0/probe46]
+connect_debug_port u_ila_0/probe46 [get_nets [list u_LACCP/u_rx/invalid_frame_length]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe47]
+set_property port_width 1 [get_debug_ports u_ila_0/probe47]
+connect_debug_port u_ila_0/probe47 [get_nets [list u_LACCP/u_RCAP/is_done]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe48]
+set_property port_width 1 [get_debug_ports u_ila_0/probe48]
+connect_debug_port u_ila_0/probe48 [get_nets [list is_ready_for_daq]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe49]
+set_property port_width 1 [get_debug_ports u_ila_0/probe49]
+connect_debug_port u_ila_0/probe49 [get_nets [list u_HBU/reg_hbfnum_mismatch]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe50]
+set_property port_width 1 [get_debug_ports u_ila_0/probe50]
+connect_debug_port u_ila_0/probe50 [get_nets [list u_LACCP/u_RCAP/reg_valid_offset]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe51]
+set_property port_width 1 [get_debug_ports u_ila_0/probe51]
+connect_debug_port u_ila_0/probe51 [get_nets [list u_LACCP/u_RCAP/secondary_is_ready]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe52]
+set_property port_width 1 [get_debug_ports u_ila_0/probe52]
+connect_debug_port u_ila_0/probe52 [get_nets [list sync_pulse_out]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe53]
+set_property port_width 1 [get_debug_ports u_ila_0/probe53]
+connect_debug_port u_ila_0/probe53 [get_nets [list u_LACCP/u_rx/unexpected_preamble]]
+create_debug_port u_ila_0 probe
+set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe54]
+set_property port_width 1 [get_debug_ports u_ila_0/probe54]
+connect_debug_port u_ila_0/probe54 [get_nets [list valid_link_addr]]
 set_property C_CLK_INPUT_FREQ_HZ 300000000 [get_debug_cores dbg_hub]
 set_property C_ENABLE_CLK_DIVIDER false [get_debug_cores dbg_hub]
 set_property C_USER_SCAN_CHAIN 1 [get_debug_cores dbg_hub]
