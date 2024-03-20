@@ -127,8 +127,8 @@ architecture Behavioral of toplevel is
   constant kDummy       : regLeaf := (Index => 0);
 
   -- MIKUMARI -----------------------------------------------------------------------------
-  --constant  kPcbVersion : string:= "GN-2006-4";
-  constant  kPcbVersion : string:= "GN-2006-1";
+  constant  kPcbVersion : string:= "GN-2006-4";
+  --constant  kPcbVersion : string:= "GN-2006-1";
 
   function GetMikuIoStd(version: string) return string is
   begin
@@ -138,50 +138,49 @@ architecture Behavioral of toplevel is
     end case;
   end function;
 
+  constant kNumMikumari       : integer:= 1;
+  constant kIdMikuSec         : integer:= 0;
+  subtype MikuScalarPort is std_logic_vector(kNumMikumari-1 downto 0);
+
   -- CDCM --
   signal power_on_init        : std_logic;
 
-  signal reset_shiftreg       : std_logic_vector(7 downto 0);
-  signal sync_reset           : std_logic;
-
-  signal cbt_lane_up          : std_logic;
-  signal pattern_error        : std_logic;
-  signal watchdog_error       : std_logic;
+  signal cbt_lane_up          : MikuScalarPort;
+  signal pattern_error        : MikuScalarPort;
+  signal watchdog_error       : MikuScalarPort;
 
   signal mod_clk, gmod_clk    : std_logic;
 
-  signal cbt_tap_value        : std_logic_vector(4 downto 0);
-  signal tap_value_out        : std_logic_vector(kWidthTap-1 downto 0);
-  signal serdes_offset        : signed(kWidthSerdesOffset-1 downto 0);
-  signal bitslip_number       : std_logic_vector(kWidthBitSlipNum-1 downto 0);
-  signal first_bit_pattern    : CdcmPatternType;
+  type TapValueArray  is array(kNumMikumari-1 downto 0) of std_logic_vector(kWidthTap-1 downto 0);
+  type SerdesOffsetArray is array(kNumMikumari-1 downto 0) of signed(kWidthSerdesOffset-1 downto 0);
+  signal tap_value_out        : TapValueArray;
+  signal serdes_offset        : SerdesOffsetArray;
 
   attribute mark_debug of tap_value_out   : signal is "true";
-  attribute mark_debug of bitslip_number  : signal is "true";
-  attribute mark_debug of first_bit_pattern : signal is "true";
 
   -- Mikumari --
-  signal miku_tx_ack        : std_logic;
-  signal miku_data_tx       : std_logic_vector(7 downto 0);
-  signal miku_valid_tx      : std_logic;
-  signal miku_last_tx       : std_logic;
-  signal busy_pulse_tx      : std_logic;
+  type MikuDataArray is array(kNumMikumari-1 downto 0) of std_logic_vector(7 downto 0);
+  type MikuPulseTypeArray is array(kNumMikumari-1 downto 0) of MikumariPulseType;
 
-  signal mikumari_link_up   : std_logic;
-  signal miku_data_rx       : std_logic_vector(7 downto 0);
-  signal miku_valid_rx      : std_logic;
-  signal miku_last_rx       : std_logic;
-  signal checksum_err       : std_logic;
-  signal frame_broken       : std_logic;
-  signal recv_terminated    : std_logic;
+  signal miku_tx_ack        : MikuScalarPort;
+  signal miku_data_tx       : MikuDataArray;
+  signal miku_valid_tx      : MikuScalarPort;
+  signal miku_last_tx       : MikuScalarPort;
+  signal busy_pulse_tx      : MikuScalarPort;
 
-  signal pulse_tx, pulse_rx : std_logic;
-  signal pulse_type_tx, pulse_type_rx  : MikumariPulseType;
+  signal mikumari_link_up   : MikuScalarPort;
+  signal miku_data_rx       : MikuDataArray;
+  signal miku_valid_rx      : MikuScalarPort;
+  signal miku_last_rx       : MikuScalarPort;
+  signal checksum_err       : MikuScalarPort;
+  signal frame_broken       : MikuScalarPort;
+  signal recv_terminated    : MikuScalarPort;
 
-  signal tx_beat            : std_logic;
+  signal pulse_tx, pulse_rx : MikuScalarPort;
+  signal pulse_type_tx, pulse_type_rx  : MikuPulseTypeArray;
 
  -- LACCP --
-  signal is_ready_for_daq   : std_logic;
+  signal is_ready_for_daq   : MikuScalarPort;
   signal sync_pulse_out     : std_logic;
 
   signal is_ready_laccp_intra   : std_logic_vector(kNumExtIntraPort-1 downto 0);
@@ -190,21 +189,21 @@ architecture Behavioral of toplevel is
   signal data_laccp_intra_in    : ExtIntraType;
   signal data_laccp_intra_out   : ExtIntraType;
 
-  signal pulse_in, synced_pulse_in  : std_logic;
   signal pulse_out                  : std_logic_vector(kNumLaccpPulse-1 downto 0);
 
   -- RLIGP --
-  signal link_addr_partter  : std_logic_vector(kPosRegister'range);
-  signal valid_link_addr    : std_logic;
+  type LinkAddrArray is array(kNumMikumari-1 downto 0) of std_logic_vector(kPosRegister'range);
+
+  signal link_addr_partter  : LinkAddrArray;
+  signal valid_link_addr    : MikuScalarPort;
 
   -- RCAP --
-  signal idelay_tap_in      : unsigned(tap_value_out'range);
-  signal idelay_tap_out     : unsigned(tap_value_out'range);
-  signal partner_serdes_offset  : signed(serdes_offset'range);
+--  signal idelay_tap_in      : unsigned(tap_value_out'range);
 
   signal valid_hbc_offset   : std_logic;
   signal hbc_offset         : std_logic_vector(kWidthHbCount-1 downto 0);
   signal laccp_fine_offset  : signed(kWidthLaccpFineOffset-1 downto 0);
+  signal local_fine_offset  : signed(kWidthLaccpFineOffset-1 downto 0);
 
   -- Heartbeat --
   signal hbu_is_synchronized  : std_logic;
@@ -219,11 +218,10 @@ architecture Behavioral of toplevel is
   attribute mark_debug of link_addr_partter  : signal is "true";
   attribute mark_debug of valid_link_addr    : signal is "true";
   attribute mark_debug of sync_pulse_out     : signal is "true";
-  attribute mark_debug of idelay_tap_in      : signal is "true";
-  attribute mark_debug of idelay_tap_out     : signal is "true";
+  --attribute mark_debug of idelay_tap_in      : signal is "true";
   attribute mark_debug of serdes_offset      : signal is "true";
-  attribute mark_debug of partner_serdes_offset  : signal is "true";
   attribute mark_debug of laccp_fine_offset  : signal is "true";
+  attribute mark_debug of local_fine_offset  : signal is "true";
 
   -- C6C ----------------------------------------------------------------------------------
   signal c6c_reset              : std_logic;
@@ -448,7 +446,7 @@ architecture Behavioral of toplevel is
 
   system_reset    <= (not clk_miku_locked) or (not USR_RSTB);
   pwr_on_reset    <= (not clk_sys_locked) or (not USR_RSTB);
-  laccp_reset     <= system_reset or (not mikumari_link_up);
+  laccp_reset     <= system_reset or (not mikumari_link_up(kIdMikuSec));
 
   user_reset      <= system_reset or rst_from_bus or emergency_reset(0);
   bct_reset       <= system_reset or emergency_reset(0);
@@ -460,21 +458,17 @@ architecture Behavioral of toplevel is
     end if;
   end process;
 
-  tmp_nim_out(1)  <= pulse_in     when(DIP(kClkOut.Index) = '1') else heartbeat_signal;
-  tmp_nim_out(2)  <= pulse_out(7) when(DIP(kClkOut.Index) = '1') else tx_beat;
+  tmp_nim_out(1)  <= heartbeat_signal;
+  tmp_nim_out(2)  <= pulse_out(7);
 
   dip_sw(1)   <= DIP(1);
   dip_sw(2)   <= DIP(2);
   dip_sw(3)   <= DIP(3);
   dip_sw(4)   <= DIP(4);
 
-  LED         <= mikumari_link_up & is_ready_for_daq & tcp_isActive(0) & clk_miku_locked;
+  LED         <= mikumari_link_up(kIdMikuSec) & is_ready_for_daq & tcp_isActive(0) & clk_miku_locked;
 
   -- MIKUMARI --------------------------------------------------------------------------
-  cbt_tap_value <= "01010" when(DIP(4 downto 3) = "00") else
-                   "00000" when(DIP(4 downto 3) = "01") else
-                   "10000" when(DIP(4 downto 3) = "10") else "01010";
-
   u_KeepInit : process(system_reset, clk_slow)
     variable counter   : integer:= 0;
   begin
@@ -535,56 +529,53 @@ architecture Behavioral of toplevel is
       RXP           => MIKUMARI_RXP,
       RXN           => MIKUMARI_RXN,
       modClk        => mod_clk,
-      tapValueIn    => cbt_tap_value,
-      txBeat        => tx_beat,
+      tapValueIn    => (others => '0'),
+      txBeat        => open,
 
       -- CBT ports ------------------------------------------------------------
-      laneUp        => cbt_lane_up,
+      laneUp        => cbt_lane_up(kIdMikuSec),
       idelayErr     => open,
       bitslipErr    => open,
-      pattErr       => pattern_error,
-      watchDogErr   => watchdog_error,
+      pattErr       => pattern_error(kIdMikuSec),
+      watchDogErr   => watchdog_error(kIdMikuSec),
 
-      tapValueOut   => tap_value_out,
-      bitslipNum    => bitslip_number,
-      serdesOffset  => serdes_offset,
-      firstBitPatt  => first_bit_pattern,
+      tapValueOut   => tap_value_out(kIdMikuSec),
+      bitslipNum    => open,
+      serdesOffset  => serdes_offset(kIdMikuSec),
+      firstBitPatt  => open,
 
       -- Mikumari ports -------------------------------------------------------
-      linkUp        => mikumari_link_up,
+      linkUp        => mikumari_link_up(kIdMikuSec),
 
       -- TX port --
       -- Data I/F --
-      dataInTx      => miku_data_tx,
-      validInTx     => miku_valid_tx,
-      frameLastInTx => miku_last_tx,
-      txAck         => miku_tx_ack,
+      dataInTx      => miku_data_tx(kIdMikuSec),
+      validInTx     => miku_valid_tx(kIdMikuSec),
+      frameLastInTx => miku_last_tx(kIdMikuSec),
+      txAck         => miku_tx_ack(kIdMikuSec),
 
-      pulseIn       => pulse_tx,
-      pulseTypeTx   => pulse_type_tx,
+      pulseIn       => pulse_tx(kIdMikuSec),
+      pulseTypeTx   => pulse_type_tx(kIdMikuSec),
       pulseRegTx    => "0000",
-      busyPulseTx   => busy_pulse_tx,
+      busyPulseTx   => busy_pulse_tx(kIdMikuSec),
 
       -- RX port --
       -- Data I/F --
-      dataOutRx   => miku_data_rx,
-      validOutRx  => miku_valid_rx,
-      frameLastRx => miku_last_rx,
-      checksumErr => checksum_err,
-      frameBroken => frame_broken,
-      recvTermnd  => recv_terminated,
+      dataOutRx   => miku_data_rx(kIdMikuSec),
+      validOutRx  => miku_valid_rx(kIdMikuSec),
+      frameLastRx => miku_last_rx(kIdMikuSec),
+      checksumErr => checksum_err(kIdMikuSec),
+      frameBroken => frame_broken(kIdMikuSec),
+      recvTermnd  => recv_terminated(kIdMikuSec),
 
-      pulseOut    => pulse_rx,
-      pulseTypeRx => pulse_type_rx,
+      pulseOut    => pulse_rx(kIdMikuSec),
+      pulseTypeRx => pulse_type_rx(kIdMikuSec),
       pulseRegRx  => open
 
     );
 
   --
-  u_sync_nim2 : entity mylib.synchronizer port map(clk_slow, NIM_IN(2), synced_pulse_in);
-  u_edge_nim2 : entity mylib.EdgeDetector port map('0', clk_slow, synced_pulse_in, pulse_in);
-
-  idelay_tap_in   <= unsigned(tap_value_out);
+  --idelay_tap_in   <= unsigned(tap_value_out);
 
   u_LACCP : entity mylib.LaccpMainBlock
     generic map
@@ -600,31 +591,32 @@ architecture Behavioral of toplevel is
         clk               => clk_slow,
 
         -- User Interface ------------------------------------------------
-        isReadyForDaq     => is_ready_for_daq,
-        laccpPulsesIn     => (7 => pulse_in, others => '0'),
+        isReadyForDaq     => is_ready_for_daq(kIdMikuSec),
+        laccpPulsesIn     => (others => '0'),
         laccpPulsesOut    => pulse_out,
         pulseInRejected   => open,
 
         -- RLIGP --
         addrMyLink        => X"C0A80003",
         validMyLink       => '1',
-        addrPartnerLink   => link_addr_partter,
-        validPartnerLink  => valid_link_addr,
+        addrPartnerLink   => link_addr_partter(kIdMikuSec),
+        validPartnerLink  => valid_link_addr(kIdMikuSec),
 
         -- RCAP --
-        idelayTapIn       => idelay_tap_in,
-        serdesLantencyIn  => serdes_offset,
-        idelayTapOut      => idelay_tap_out,
-        serdesLantencyOut => partner_serdes_offset,
+        idelayTapIn       => unsigned(tap_value_out(kIdMikuSec)),
+        serdesLantencyIn  => serdes_offset(kIdMikuSec),
+        idelayTapOut      => open,
+        serdesLantencyOut => open,
 
         hbuIsSyncedIn     => hbu_is_synchronized,
-        syncPulseIn       => heartbeat_signal,
+        syncPulseIn       => '0',
         syncPulseOut      => sync_pulse_out,
 
         upstreamOffset    => (others => '0'),
         validOffset       => valid_hbc_offset,
         hbcOffset         => hbc_offset,
         fineOffset        => laccp_fine_offset,
+        fineOffsetLocal   => local_fine_offset,
 
         -- LACCP Bus Port ------------------------------------------------
         -- Intra-port--
@@ -643,28 +635,28 @@ architecture Behavioral of toplevel is
         validInterOut     => open,
 
         -- MIKUMARI-Link -------------------------------------------------
-        mikuLinkUpIn      => mikumari_link_up,
+        mikuLinkUpIn      => mikumari_link_up(kIdMikuSec),
 
         -- TX port --
-        dataTx            => miku_data_tx,
-        validTx           => miku_valid_tx,
-        frameLastTx       => miku_last_tx,
-        txAck             => miku_tx_ack,
+        dataTx            => miku_data_tx(kIdMikuSec),
+        validTx           => miku_valid_tx(kIdMikuSec),
+        frameLastTx       => miku_last_tx(kIdMikuSec),
+        txAck             => miku_tx_ack(kIdMikuSec),
 
-        pulseTx           => pulse_tx,
-        pulseTypeTx       => pulse_type_tx,
-        busyPulseTx       => busy_pulse_tx,
+        pulseTx           => pulse_tx(kIdMikuSec),
+        pulseTypeTx       => pulse_type_tx(kIdMikuSec),
+        busyPulseTx       => busy_pulse_tx(kIdMikuSec),
 
         -- RX port --
-        dataRx            => miku_data_rx,
-        validRx           => miku_valid_rx,
-        frameLastRx       => miku_last_rx,
-        checkSumErrRx     => checksum_err,
-        frameBrokenRx     => frame_broken,
-        recvTermndRx      => recv_terminated,
+        dataRx            => miku_data_rx(kIdMikuSec),
+        validRx           => miku_valid_rx(kIdMikuSec),
+        frameLastRx       => miku_last_rx(kIdMikuSec),
+        checkSumErrRx     => checksum_err(kIdMikuSec),
+        frameBrokenRx     => frame_broken(kIdMikuSec),
+        recvTermndRx      => recv_terminated(kIdMikuSec),
 
-        pulseRx           => pulse_rx,
-        pulseTypeRx       => pulse_type_rx
+        pulseRx           => pulse_rx(kIdMikuSec),
+        pulseTypeRx       => pulse_type_rx(kIdMikuSec)
 
       );
 
